@@ -11,7 +11,11 @@ const Sidebar = (props: Props) => {
   const [show, setShow] = useState(false);
   const ref = useRef(null);
 
-  useOnClickOutside(ref, () => setShow(false));
+  useOnClickOutside(
+    //@ts-ignore
+    ref,
+    () => setShow(false)
+  );
   return (
     <>
       <button
