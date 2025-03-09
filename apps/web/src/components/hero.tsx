@@ -3,7 +3,7 @@ import React from "react";
 const Hero = () => {
   return (
     <div className="bg-gradient-to-br from-sky-500 to-indigo-500 text-white">
-      <div className="container mx-auto flex flex-col md:flex-row items-center flex-wrap px-3 pt-12">
+      <div className="container mx-auto flex flex-col md:flex-row items-center flex-wrap px-2 pt-12">
         {/* left col */}
         <div className="flex flex-col w-full justify-center items-start md:w-2/5 text-center md:text-left">
           <p className="capitalize tracking-wide w-full">
