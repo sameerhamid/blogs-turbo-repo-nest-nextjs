@@ -2,13 +2,13 @@ export interface Post {
   id: number;
   title: string;
   slug: string;
-  authro: User;
+  author: User;
   content: string;
   thumbnail: string | null;
   published: boolean;
   authorId: number;
   tags: Tag[];
-  //   comments: Comment[];
+  comments: Comment[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -18,5 +18,9 @@
   "type": "commonjs",
   "devDependencies": {
     "turbo": "^2.4.4"
+  },
+  "dependencies": {
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6"
   }
 }
