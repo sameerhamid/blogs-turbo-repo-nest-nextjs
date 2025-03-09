@@ -8,6 +8,10 @@ export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.post.findMany();
+    return await this.prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
   }
 }
