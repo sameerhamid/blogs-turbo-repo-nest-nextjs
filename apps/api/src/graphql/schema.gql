@@ -46,13 +46,21 @@ type Post {
   comments: [Comment!]
 }
 
+type AuthPayload {
+  id: Int!
+  name: String!
+  avatar: String
+  email: String!
+  accessToken: String!
+}
+
 type Query {
   posts: [Post!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  signIn(signInInput: SignInInput!): User!
+  signIn(signInInput: SignInInput!): AuthPayload!
 }
 
 input CreateUserInput {
