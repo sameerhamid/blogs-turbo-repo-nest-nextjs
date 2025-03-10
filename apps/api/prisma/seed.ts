@@ -101,7 +101,7 @@ async function main() {
 
   // 2️⃣ Create Posts and Get Their IDs
   const posts = await Promise.all(
-    Array.from({ length: 40 }).map(() =>
+    Array.from({ length: 100 }).map(() =>
       prisma.post.create({
         data: {
           title: faker.lorem.sentence(),
