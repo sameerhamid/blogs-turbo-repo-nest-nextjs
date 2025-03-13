@@ -1,6 +1,11 @@
 export type SignUpFormState =
   | {
-      errors: {
+      data: {
+        name?: string;
+        email?: string;
+        password?: string;
+      };
+      errors?: {
         name?: string[];
         email?: string[];
         password?: string[];

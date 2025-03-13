@@ -10,7 +10,11 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ children, ...props }) => {
   const { pending } = useFormStatus();
   return (
     <Button {...props} type="submit" aria-disabled={pending}>
-      {pending ? <span className="animate-spin">Submitting...</span> : children}
+      {pending ? (
+        <span className="animate-pulse">Submitting...</span>
+      ) : (
+        children
+      )}
     </Button>
   );
 };

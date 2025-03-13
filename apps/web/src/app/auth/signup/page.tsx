@@ -10,9 +10,12 @@ const SignUpPage = () => {
 
       <SignupForm />
 
-      <div>
+      <div className="flex gap-2 mt-4">
         <p>Alreay have an account?</p>
-        <Link href={"/auth/signin"} className="underline">
+        <Link
+          href={"/auth/signin"}
+          className="underline text-slate-700 hover:text-slate-500"
+        >
           Sign In
         </Link>
       </div>
