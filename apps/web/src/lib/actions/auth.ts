@@ -80,6 +80,7 @@ export async function signIn(
       id: data?.signIn?.id,
       name: data?.signIn?.name,
       email: data?.signIn?.email,
+      avatar: data?.signIn?.avatar,
     },
     accessToken: data.signIn.accessToken,
   });
