@@ -1,14 +1,14 @@
 import Link from "next/link";
 import React from "react";
-import SignupForm from "./_components/signUpForm";
+import AuthForm from "../_components/authForm";
 
 const SignUpPage = () => {
   return (
-    <div className="bg-white p-8 rounded-md shadow-md w-98 flex flex-col items-center justify-center">
+    <div className="bg-white p-8 rounded-md shadow-md md:w-98 w-90 flex flex-col items-center justify-center mt-10">
       <h2 className="text-center text-2xl font-bold mb-4">Sign Up Page</h2>
       {/* sign up form */}
 
-      <SignupForm />
+      <AuthForm formType="signup" />
 
       <div className="flex gap-2 mt-4">
         <p>Alreay have an account?</p>
