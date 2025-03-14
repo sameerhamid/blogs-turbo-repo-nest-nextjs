@@ -13,7 +13,7 @@ const SignupForm = () => {
   const togglePassword = () => setShowPassword((prev) => !prev);
 
   return (
-    <form className={`flex flex-col  gap-4`} action={action}>
+    <form className={`flex flex-col  gap-4 `} action={action}>
       {/* Global Error Message */}
       {!!state?.message && (
         <p className="text-red-500 text-sm">{state.message}</p>
@@ -91,7 +91,9 @@ const SignupForm = () => {
         </div>
       </div>
 
-      <SubmitButton className="w-75 py-5">Sign Up</SubmitButton>
+      <SubmitButton className="w-75 py-5 bg-gradient-to-br from-sky-500 to-indigo-500 text-white cursor-pointer">
+        Sign Up
+      </SubmitButton>
     </form>
   );
 };
