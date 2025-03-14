@@ -9,6 +9,7 @@ import { CREATE_USER_MUTATION, LOGIN_USER_MUTATION } from "../gqlQueries";
 import { redirect } from "next/navigation";
 import { LoginFormSchema } from "../zodSchemas/loginFormSchema";
 import { revalidatePath } from "next/cache";
+import { createSession } from "../session";
 
 export async function signUp(
   state: SignUpFormState,
@@ -73,6 +74,15 @@ export async function signIn(
   }
 
   // create a session for the user
+
+  await createSession({
+    user: {
+      id: data?.signIn?.id,
+      name: data?.signIn?.name,
+      email: data?.signIn?.email,
+    },
+    accessToken: data.signIn.accessToken,
+  });
 
   revalidatePath("/");
   redirect("/");
