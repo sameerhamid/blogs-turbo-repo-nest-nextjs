@@ -1,5 +1,7 @@
-import { SignJWT } from "jose";
+import { SignJWT, jwtVerify } from "jose";
+
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export type SessionUser = {
   id?: string;
@@ -32,4 +34,19 @@ export const createSession = async (payload: Session) => {
     sameSite: "lax",
     path: "/",
   });
+};
+
+export const getSession = async () => {
+  const cookie = (await cookies()).get("session")?.value;
+  if (!cookie) return null;
+
+  try {
+    const { payload } = await jwtVerify(cookie, encodedKey, {
+      algorithms: ["HS256"],
+    });
+    return payload as Session;
+  } catch (error) {
+    console.error("JWT verification failed:", error);
+    redirect("/auth/signin");
+  }
 };
