@@ -50,3 +50,7 @@ export const getSession = async () => {
     redirect("/auth/signin");
   }
 };
+
+export const deleteSession = async () => {
+  (await cookies()).delete("session");
+};
