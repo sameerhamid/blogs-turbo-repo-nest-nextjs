@@ -6,6 +6,7 @@ import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { Comment } from "@/lib/types/modelTypes";
 import CommentCard from "./commentCard";
 import CommentPagination from "./commentPagination";
+import CommentCardSkelton from "./commentCardSkelton";
 
 type Props = {
   postId: number;
@@ -27,9 +28,13 @@ const Comments = ({ postId }: Props) => {
     <div className="p-4 rounded-md shadow-md mt-2">
       <h6 className="text-lg text-slate-700">Comments</h6>
       <div className="flex flex-col gap-4 mt-2">
-        {data?.comments.map((comment) => (
-          <CommentCard key={comment.id} comment={comment} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <CommentCardSkelton key={index} />
+            ))
+          : data?.comments.map((comment) => (
+              <CommentCard key={comment.id} comment={comment} />
+            ))}
       </div>
       <CommentPagination
         className="pt-2"

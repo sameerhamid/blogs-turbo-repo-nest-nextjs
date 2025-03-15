@@ -14,6 +14,8 @@ export const getPostComments = async ({
   take: number;
   skip: number;
 }) => {
+  // add timer for loading
+
   const data = await fetchGraphql(print(GET_POST_COMMENTS), {
     postId,
     take,
