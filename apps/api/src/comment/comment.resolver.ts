@@ -42,6 +42,7 @@ export class CommentResolver {
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
   ) {
     const authorId = context.req.user.id;
+
     return this.commentService.create(createCommentInput, authorId);
   }
 }

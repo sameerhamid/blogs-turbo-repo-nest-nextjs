@@ -16,7 +16,7 @@ type Props = {
 };
 const Comments = ({ postId, user }: Props) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["GET_POST_COMMENTS", postId, page],
     queryFn: async () =>
       await getPostComments({
@@ -32,7 +32,7 @@ const Comments = ({ postId, user }: Props) => {
       <h6 className="text-lg text-slate-700">Comments</h6>
 
       {/* add comment dialog */}
-      {!!user && <AddComment postId={postId} user={user} />}
+      {!!user && <AddComment postId={postId} user={user} refetch={refetch} />}
 
       <div className="flex flex-col gap-4 mt-2">
         {isLoading

@@ -41,6 +41,8 @@ export class CommentService {
   }
 
   async create(createCommentInput: CreateCommentInput, authorId: number) {
+    console.log('createCommentInput>>>', createCommentInput);
+    console.log('authorid>>>', authorId);
     return await this.prisma.comment.create({
       data: {
         content: createCommentInput.content,

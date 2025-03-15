@@ -91,3 +91,15 @@ export const GET_POST_COMMENTS = gql`
     postCommentCount(postId: $postId)
   }
 `;
+
+export const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment($createCommentInput: CreateCommentInput!) {
+    createComment(createCommentInput: $createCommentInput) {
+      id
+      content
+
+      createdAt
+      updatedAt
+    }
+  }
+`;
