@@ -67,11 +67,6 @@ const Profile = ({ user }: Props) => {
          [&>*>*:nth-child(1)]:justify-self-end
          "
         >
-          <a href="/api/auth/signout">
-            <ArrowRightStartOnRectangleIcon className="w-4" />
-            <span className="col-span-4">Sign Out</span>
-          </a>
-
           <Link href={"/user/create-post"}>
             <PencilSquareIcon className="w-4 " />
             <span className="col-span-4">Create Post</span>
@@ -81,6 +76,11 @@ const Profile = ({ user }: Props) => {
             <ListBulletIcon className="w-4" />
             <span className="col-span-4">Posts</span>
           </Link>
+
+          <a href="/api/auth/signout">
+            <ArrowRightStartOnRectangleIcon className="w-4" />
+            <span className="col-span-4">Sign Out</span>
+          </a>
         </div>
       </PopoverContent>
     </Popover>

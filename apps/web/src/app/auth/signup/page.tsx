@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import AuthForm from "../_components/authForm";
+import { Button } from "@/components/ui/button";
+import { BACKEND_URL } from "@/lib/constants";
 
 const SignUpPage = () => {
   return (
@@ -19,6 +21,11 @@ const SignUpPage = () => {
           Sign In
         </Link>
       </div>
+
+      <div className="h-0.5 mx-auto bg-gradient-to-r from-sky-500 to-indigo-500 w-full mt-5" />
+      <Button className="mt-3 py-5 cursor-pointer w-full">
+        <a href={`${BACKEND_URL}/auth/google/login`}>Sign Up With Google</a>
+      </Button>
     </div>
   );
 };
