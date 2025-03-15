@@ -7,11 +7,14 @@ import { Comment } from "@/lib/types/modelTypes";
 import CommentCard from "./commentCard";
 import CommentPagination from "./commentPagination";
 import CommentCardSkelton from "./commentCardSkelton";
+import { SessionUser } from "@/lib/session";
+import AddComment from "./addComment";
 
 type Props = {
   postId: number;
+  user?: SessionUser;
 };
-const Comments = ({ postId }: Props) => {
+const Comments = ({ postId, user }: Props) => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useQuery({
     queryKey: ["GET_POST_COMMENTS", postId, page],
@@ -27,6 +30,10 @@ const Comments = ({ postId }: Props) => {
   return (
     <div className="p-4 rounded-md shadow-md mt-2">
       <h6 className="text-lg text-slate-700">Comments</h6>
+
+      {/* add comment dialog */}
+      {!!user && <AddComment postId={postId} user={user} />}
+
       <div className="flex flex-col gap-4 mt-2">
         {isLoading
           ? Array.from({ length: 10 }).map((_, index) => (
