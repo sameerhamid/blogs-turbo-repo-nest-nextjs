@@ -85,8 +85,8 @@ const AddComment = (props: Props) => {
             </p>
           )}
 
-          <SubmitButton className="mt-4 bg-gradient-to-r from-sky-500 to-indigo-500 cursor-pointer ">
-            Submit
+          <SubmitButton className="mt-5 py-5 bg-gradient-to-r from-sky-500 to-indigo-500 cursor-pointer">
+            Save Comment
           </SubmitButton>
         </form>
       </DialogContent>
