@@ -36,10 +36,14 @@ const Profile = ({ user }: Props) => {
     <Popover>
       <PopoverTrigger className="cursor-pointer ">
         <Avatar>
-          <AvatarImage src={user.avatar} alt={user.name ?? ""} />
+          <AvatarImage
+            src={user.avatar}
+            alt={user.name ?? ""}
+            className="rounded-full w-14 border-1 border-white"
+          />
 
           <AvatarFallback
-            className={`flex items-center justify-center text-white font-semibold ${bgColor} `}
+            className={`flex items-center justify-center text-white font-semibold ${bgColor} border-1 border-white`}
           >
             <div>{firstChar}</div>
           </AvatarFallback>
