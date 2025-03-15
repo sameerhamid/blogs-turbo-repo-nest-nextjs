@@ -30,7 +30,7 @@ const PostPage = async ({ params }: Props) => {
         />
       </div>
 
-      <SanitizedContent content={post.content} />
+      <SanitizedContent content={post.content} className="mt-4" />
 
       {/* TODO put the post comments here */}
 

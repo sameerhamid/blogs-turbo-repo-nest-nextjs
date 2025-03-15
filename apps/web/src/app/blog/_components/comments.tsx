@@ -5,6 +5,7 @@ import { getPostComments } from "@/lib/actions/commentsActions";
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { Comment } from "@/lib/types/modelTypes";
 import CommentCard from "./commentCard";
+import CommentPagination from "./commentPagination";
 
 type Props = {
   postId: number;
@@ -21,6 +22,7 @@ const Comments = ({ postId }: Props) => {
       }),
   });
 
+  const totalPages = Math.ceil((data?.totalComments ?? 0) / DEFAULT_PAGE_SIZE);
   return (
     <div className="p-4 rounded-md shadow-md mt-2">
       <h6 className="text-lg text-slate-700">Comments</h6>
@@ -29,6 +31,12 @@ const Comments = ({ postId }: Props) => {
           <CommentCard key={comment.id} comment={comment} />
         ))}
       </div>
+      <CommentPagination
+        className="pt-2"
+        currentPage={page}
+        totalPages={totalPages}
+        setCurrentPage={setPage}
+      />
     </div>
   );
 };
