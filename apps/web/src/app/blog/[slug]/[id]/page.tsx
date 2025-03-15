@@ -2,6 +2,7 @@ import { fetchPostById } from "@/lib/actions/postActions";
 import Image from "next/image";
 import React from "react";
 import SanitizedContent from "../../_components/sanitizedContent";
+import Comments from "../../_components/comments";
 
 type Props = {
   params: {
@@ -32,6 +33,8 @@ const PostPage = async ({ params }: Props) => {
       <SanitizedContent content={post.content} />
 
       {/* TODO put the post comments here */}
+
+      <Comments postId={post.id} />
     </main>
   );
 };

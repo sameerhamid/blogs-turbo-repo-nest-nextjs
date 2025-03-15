@@ -14,7 +14,7 @@ type Props = {
 };
 
 // Function to generate a color based on the first letter
-const getBackgroundColor = (char: string) => {
+export const getBackgroundColor = (char: string) => {
   const colors = [
     "bg-red-500",
     "bg-blue-500",
