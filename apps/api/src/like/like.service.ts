@@ -18,4 +18,38 @@ export class LikeService {
       throw new BadRequestException("You've already liked this post");
     }
   }
+
+  async unlikePost({ postId, userId }: { postId: number; userId: number }) {
+    try {
+      return !!(await this.prisma.like.delete({
+        where: {
+          userId_postId: {
+            postId,
+            userId,
+          },
+        },
+      }));
+    } catch (error) {
+      throw new BadRequestException("You haven't liked this post");
+    }
+  }
+
+  async getPostLikesCount(postId: number) {
+    return await this.prisma.like.count({
+      where: {
+        postId,
+      },
+    });
+  }
+
+  async userLikedPost({ postId, userId }: { postId: number; userId: number }) {
+    return !!(await this.prisma.like.findUnique({
+      where: {
+        userId_postId: {
+          postId,
+          userId,
+        },
+      },
+    }));
+  }
 }
