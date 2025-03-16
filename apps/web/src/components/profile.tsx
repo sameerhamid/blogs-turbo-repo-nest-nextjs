@@ -50,8 +50,8 @@ const Profile = ({ user }: Props) => {
         </Avatar>
       </PopoverTrigger>
 
-      <PopoverContent className="translate-x-[-10px] w-64">
-        <div className="flex justify-center items-center gap-2">
+      <PopoverContent className="translate-x-[-10px] w-65">
+        <div className="flex justify-center items-center gap-2 w-full">
           <div
             className={`flex items-center justify-center text-white font-semibold ${bgColor} w-6 h-6 rounded-full `}
           >
