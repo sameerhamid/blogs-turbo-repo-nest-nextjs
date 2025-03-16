@@ -1,6 +1,7 @@
 import { PostWithLikeAndCommentCount } from "@/lib/types/modelTypes";
 import React from "react";
 import PostListItem from "./postListItem";
+import Pagination from "@/components/pagination";
 
 type Props = {
   posts: PostWithLikeAndCommentCount[];
@@ -23,6 +24,12 @@ const PostList = (props: Props) => {
       {props.posts.map((post) => {
         return <PostListItem key={post.id} post={post} />;
       })}
+
+      <Pagination
+        currentPage={props.currentPage}
+        totalPages={props.totalPages}
+        className="my-4"
+      />
     </>
   );
 };
