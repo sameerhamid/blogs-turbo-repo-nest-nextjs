@@ -31,7 +31,7 @@ export class PostService {
     });
   }
 
-  async findByUser({
+  async findPostByUser({
     userId,
     skip = 0,
     take = DEFAULT_PAGE_SIZE,
@@ -59,6 +59,7 @@ export class PostService {
           },
         },
       },
+
       skip,
       take,
     });

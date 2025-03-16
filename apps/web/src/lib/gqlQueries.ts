@@ -127,3 +127,23 @@ export const UNLIKE_POST_MUTATION = gql`
     unlikePost(postId: $postId)
   }
 `;
+
+export const GET_USER_POSTS = gql`
+  query getUserPosts($skip: Float, $take: Float) {
+    getUserPosts(skip: $skip, take: $take) {
+      id
+      title
+      slug
+      thumbnail
+      content
+      published
+      createdAt
+
+      _count {
+        comments
+        likes
+      }
+    }
+    userPostsCount
+  }
+`;

@@ -13,6 +13,12 @@ export interface Post {
   updatedAt: Date;
 }
 
+export interface PostWithLikeAndCommentCount extends Post {
+  _count: {
+    comments: number;
+    likes: number;
+  };
+}
 export interface User {
   id: number;
   email: string;

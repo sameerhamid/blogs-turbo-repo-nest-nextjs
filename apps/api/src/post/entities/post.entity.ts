@@ -42,3 +42,18 @@ export class Post {
   @Field(() => [Comment], { nullable: true })
   comments?: Comment[];
 }
+
+@ObjectType()
+class Count {
+  @Field(() => Int)
+  comments: number;
+
+  @Field(() => Int)
+  likes: number;
+}
+
+@ObjectType()
+export class PostWithCount extends Post {
+  @Field(() => Count)
+  _count: Count;
+}

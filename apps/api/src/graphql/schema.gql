@@ -46,6 +46,26 @@ type Post {
   comments: [Comment!]
 }
 
+type Count {
+  comments: Int!
+  likes: Int!
+}
+
+type PostWithCount {
+  id: Int!
+  title: String!
+  slug: String
+  thumbnail: String
+  content: String!
+  published: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  tags: [Tag!]
+  comments: [Comment!]
+  _count: Count!
+}
+
 type AuthPayload {
   id: Int!
   name: String!
@@ -58,7 +78,7 @@ type Query {
   posts(skip: Float, take: Float): [Post!]!
   postCount: Int!
   getPostById(id: Int!): Post!
-  getUserPosts(skip: Float, take: Float): [Post!]!
+  getUserPosts(skip: Float, take: Float): [PostWithCount!]!
   userPostsCount: Int!
   getPostComments(postId: Int!, take: Int = 12, skip: Int = 0): [Comment!]!
   postCommentCount(postId: Int!): Int!
