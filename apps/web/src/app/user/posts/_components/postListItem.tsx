@@ -2,6 +2,7 @@ import { PostWithLikeAndCommentCount } from "@/lib/types/modelTypes";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import React from "react";
+import PostActions from "./postActions";
 
 type Props = {
   post: PostWithLikeAndCommentCount;
@@ -40,6 +41,8 @@ const PostListItem = ({ post }: Props) => {
       <div className="flex items-center  justify-center">
         {post._count.comments}
       </div>
+
+      <PostActions postId={post.id} />
     </div>
   );
 };
