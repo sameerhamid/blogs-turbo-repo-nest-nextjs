@@ -50,15 +50,15 @@ const Profile = ({ user }: Props) => {
         </Avatar>
       </PopoverTrigger>
 
-      <PopoverContent className="w-full translate-x-[-10px]">
-        <div className="flex justify-center items-center gap-2 px-14 ">
+      <PopoverContent className="translate-x-[-10px] w-64">
+        <div className="flex justify-center items-center gap-2">
           <div
             className={`flex items-center justify-center text-white font-semibold ${bgColor} w-6 h-6 rounded-full `}
           >
             {firstChar}
           </div>
 
-          <p>
+          <p className="line-clamp-1">
             {user.name &&
               user.name.charAt(0).toUpperCase() + user.name.slice(1)}
           </p>
