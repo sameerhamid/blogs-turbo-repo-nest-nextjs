@@ -104,9 +104,14 @@ export const CREATE_COMMENT_MUTATION = gql`
   }
 `;
 
-export const POST_LIKES = gql`
+export const POST_LIKES_COUNT = gql`
   query PostLikeData($postId: Int!) {
     postLikesCount(postId: $postId)
+  }
+`;
+
+export const USER_LIKED_POST = gql`
+  query PostLikeData($postId: Int!) {
     userLikedPost(postId: $postId)
   }
 `;

@@ -8,19 +8,32 @@ import { SessionUser } from "@/lib/session";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/16/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 type Props = {
   postId: number;
   user?: SessionUser;
 };
 const Like = (props: Props) => {
-  const { data, isLoading, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["GET_POST_LIKES_DATA", props.postId],
     queryFn: async () => await getPostLikesData(props.postId),
   });
 
   const likeMutation = useMutation({
-    mutationFn: async () => await likePost(props.postId),
+    mutationFn: async () => {
+      if (!props.user) {
+        toast("Oops!", {
+          description: "Please log in to like a post",
+          duration: 7000,
+          style: {
+            color: "red",
+          },
+        });
+      }
+      await likePost(props.postId);
+    },
     onSuccess: async () => {
       await refetch();
     },

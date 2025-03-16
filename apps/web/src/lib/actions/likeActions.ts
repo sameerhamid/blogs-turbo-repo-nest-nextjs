@@ -1,19 +1,30 @@
 "use server";
 
 import { print } from "graphql";
-import { authFetchGraphql } from "../fetchGraphQL";
+import { authFetchGraphql, fetchGraphql } from "../fetchGraphQL";
 import {
   LIKE_POST_MUTATION,
-  POST_LIKES,
+  POST_LIKES_COUNT,
   UNLIKE_POST_MUTATION,
+  USER_LIKED_POST,
 } from "../gqlQueries";
 
 export async function getPostLikesData(postId: number) {
-  const data = await authFetchGraphql(print(POST_LIKES), { postId });
+  const likesCount = await fetchGraphql(print(POST_LIKES_COUNT), { postId });
+  const userLikedPost = await authFetchGraphql(print(USER_LIKED_POST), {
+    postId,
+  });
+
+  if (userLikedPost.error) {
+    return {
+      likeCount: likesCount.postLikesCount as number,
+      userLikedPost: false,
+    };
+  }
 
   return {
-    likeCount: data.postLikesCount as number,
-    userLikedPost: data.userLikedPost as boolean,
+    likeCount: likesCount.postLikesCount as number,
+    userLikedPost: userLikedPost.userLikedPost as boolean,
   };
 }
 
