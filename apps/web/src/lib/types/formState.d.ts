@@ -36,14 +36,14 @@ export type PostFormState =
         content?: string;
         thumbnail?: File | null;
         tags?: string;
-        isPublished?: boolean;
+        published?: string;
       };
       errors?: {
         title?: string[];
         content?: string[];
         thumbnail?: string[];
         tags?: string[];
-        isPublished?: string[];
+        published?: string[];
       };
       message?: string;
       ok?: boolean;

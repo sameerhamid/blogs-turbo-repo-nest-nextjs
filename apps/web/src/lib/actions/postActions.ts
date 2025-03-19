@@ -2,11 +2,17 @@
 
 import { authFetchGraphql, fetchGraphql } from "../fetchGraphQL";
 import { print } from "graphql";
-import { GET_POST_BY_ID, GET_POSTS, GET_USER_POSTS } from "../gqlQueries";
+import {
+  CREATE_POST_MUTATION,
+  GET_POST_BY_ID,
+  GET_POSTS,
+  GET_USER_POSTS,
+} from "../gqlQueries";
 import { Post, PostWithLikeAndCommentCount } from "../types/modelTypes";
 import { transforTakeSkip } from "../helpers";
 import { PostFormState } from "../types/formState";
 import { PostFormSchema } from "../zodSchemas/postFormSchema";
+import { redirect } from "next/navigation";
 
 export const fetchPosts = async ({
   page,
@@ -51,7 +57,12 @@ export async function saveNewPost(
   state: PostFormState,
   formData: FormData
 ): Promise<PostFormState> {
-  const fData = Object.fromEntries(formData.entries());
+  let fData = Object.fromEntries(formData.entries());
+  fData = {
+    ...fData,
+    published: fData.published ? "on" : "off",
+  };
+
   const validateFields = PostFormSchema.safeParse(fData);
   if (!validateFields.success) {
     return {
@@ -64,5 +75,27 @@ export async function saveNewPost(
 
   const thumbnailUrl = "";
 
-  return undefined;
+  const variables = {
+    createPostInput: {
+      title: validateFields.data.title,
+      content: validateFields.data.content,
+      thumbnail: thumbnailUrl,
+      tags: validateFields.data.tags.split(",").map((tag) => tag.trim()),
+      published: validateFields.data.published,
+    },
+  };
+
+  const data = await authFetchGraphql(print(CREATE_POST_MUTATION), variables);
+  if (data.errors) {
+    return {
+      data: fData,
+      message: data.errors[0].message,
+      ok: false,
+    };
+  }
+
+  return {
+    message: "Success! New post saved.",
+    ok: true,
+  };
 }
