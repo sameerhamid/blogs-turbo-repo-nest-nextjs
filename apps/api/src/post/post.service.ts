@@ -72,4 +72,29 @@ export class PostService {
       },
     });
   }
+
+  async create(userId: number, createPostInput: CreatePostInput) {
+    return await this.prisma.post.create({
+      data: {
+        ...createPostInput,
+        author: {
+          connect: {
+            id: userId,
+          },
+        },
+        tags: {
+          connectOrCreate: createPostInput.tags.map((tag) => {
+            return {
+              where: {
+                name: tag,
+              },
+              create: {
+                name: tag,
+              },
+            };
+          }),
+        },
+      },
+    });
+  }
 }
