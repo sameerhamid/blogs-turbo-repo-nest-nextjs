@@ -1,3 +1,4 @@
+"use client";
 import { SessionUser } from "@/lib/session";
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -8,6 +9,7 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Props = {
   user: SessionUser;
@@ -29,11 +31,17 @@ export const getBackgroundColor = (char: string) => {
 };
 
 const Profile = ({ user }: Props) => {
+  const pathname = usePathname(); // Get current route
   const firstChar = user.name?.charAt(0).toUpperCase() || "?";
   const bgColor = getBackgroundColor(firstChar);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className="cursor-pointer ">
         <Avatar>
           <AvatarImage
@@ -71,12 +79,28 @@ const Profile = ({ user }: Props) => {
          [&>*>*:nth-child(1)]:justify-self-end
          "
         >
-          <Link href={"/user/create-post"}>
+          <Link
+            href={"/user/create-post"}
+            onClick={handleOpen}
+            className={`${
+              pathname === "/user/create-post"
+                ? "bg-sky-500 text-white"
+                : "hover:bg-sky-500 hover:text-white"
+            }`}
+          >
             <PencilSquareIcon className="w-4 " />
             <span className="col-span-4">Create Post</span>
           </Link>
 
-          <Link href={"/user/posts"}>
+          <Link
+            href={"/user/posts"}
+            onClick={handleOpen}
+            className={`${
+              pathname === "/user/posts"
+                ? "bg-sky-500 text-white"
+                : "hover:bg-sky-500 hover:text-white"
+            }`}
+          >
             <ListBulletIcon className="w-4" />
             <span className="col-span-4">Posts</span>
           </Link>
