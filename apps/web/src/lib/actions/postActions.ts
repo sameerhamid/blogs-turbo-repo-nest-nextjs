@@ -5,6 +5,8 @@ import { print } from "graphql";
 import { GET_POST_BY_ID, GET_POSTS, GET_USER_POSTS } from "../gqlQueries";
 import { Post, PostWithLikeAndCommentCount } from "../types/modelTypes";
 import { transforTakeSkip } from "../helpers";
+import { PostFormState } from "../types/formState";
+import { PostFormSchema } from "../zodSchemas/postFormSchema";
 
 export const fetchPosts = async ({
   page,
@@ -43,4 +45,24 @@ export async function fethUserPosts({
     posts: data.getUserPosts as PostWithLikeAndCommentCount[],
     totalPost: data.userPostsCount as number,
   };
+}
+
+export async function saveNewPost(
+  state: PostFormState,
+  formData: FormData
+): Promise<PostFormState> {
+  const fData = Object.fromEntries(formData.entries());
+  const validateFields = PostFormSchema.safeParse(fData);
+  if (!validateFields.success) {
+    return {
+      data: fData,
+      errors: validateFields.error.flatten().fieldErrors,
+      ok: false,
+    };
+  }
+  // uplaod thumbnail to superbase
+
+  const thumbnailUrl = "";
+
+  return undefined;
 }
