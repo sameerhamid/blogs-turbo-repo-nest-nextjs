@@ -13,6 +13,7 @@ import { transforTakeSkip } from "../helpers";
 import { PostFormState } from "../types/formState";
 import { PostFormSchema } from "../zodSchemas/postFormSchema";
 import { redirect } from "next/navigation";
+import { uploadThumbnail } from "../upload";
 
 export const fetchPosts = async ({
   page,
@@ -71,9 +72,12 @@ export async function saveNewPost(
       ok: false,
     };
   }
-  // uplaod thumbnail to superbase
 
-  const thumbnailUrl = "";
+  let thumbnailUrl = "";
+  // uplaod thumbnail to superbase
+  if (validateFields.data.thumbnail) {
+    thumbnailUrl = await uploadThumbnail(validateFields.data.thumbnail!);
+  }
 
   const variables = {
     createPostInput: {
