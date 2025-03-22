@@ -112,12 +112,14 @@ export class PostService {
       );
     }
 
+    const { postId, ...data } = updatePostInput;
     return await this.prisma.post.update({
       where: {
-        id: updatePostInput.postId,
+        id: postId,
       },
       data: {
-        ...updatePostInput,
+        ...data,
+
         tags: {
           set: [],
           connectOrCreate: updatePostInput?.tags?.map((tag) => ({

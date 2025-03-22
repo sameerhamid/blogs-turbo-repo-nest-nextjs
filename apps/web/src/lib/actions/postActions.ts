@@ -7,6 +7,7 @@ import {
   GET_POST_BY_ID,
   GET_POSTS,
   GET_USER_POSTS,
+  UPDATE_POST_MUTATION,
 } from "../gqlQueries";
 import { Post, PostWithLikeAndCommentCount } from "../types/modelTypes";
 import { transforTakeSkip } from "../helpers";
@@ -75,7 +76,7 @@ export async function saveNewPost(
 
   let thumbnailUrl = "";
   // uplaod thumbnail to superbase
-  if (validateFields.data.thumbnail) {
+  if (validateFields.data.thumbnail?.size !== 0) {
     thumbnailUrl = await uploadThumbnail(validateFields.data.thumbnail!);
   }
 
@@ -100,6 +101,59 @@ export async function saveNewPost(
 
   return {
     message: "Success! New post saved.",
+    ok: true,
+  };
+}
+
+export async function updatePost(
+  state: PostFormState,
+  formData: FormData
+): Promise<PostFormState> {
+  let fData = Object.fromEntries(formData.entries());
+  fData = {
+    ...fData,
+    published: fData.published ? "on" : "off",
+  };
+
+  const validateFields = PostFormSchema.safeParse(fData);
+  if (!validateFields.success) {
+    return {
+      data: fData,
+      errors: validateFields.error.flatten().fieldErrors,
+      ok: false,
+    };
+  }
+
+  console.log("validateFields.data.thumbnail", validateFields.data.thumbnail);
+  // check if thumbnail has been changed
+  let thumbnailUrl = "";
+  // uplaod thumbnail to superbase
+  if (validateFields.data.thumbnail?.size !== 0) {
+    thumbnailUrl = await uploadThumbnail(validateFields.data.thumbnail!);
+  }
+
+  const variables = {
+    updatePostInput: {
+      postId: validateFields.data.postId,
+      title: validateFields.data.title,
+      content: validateFields.data.content,
+      tags: validateFields.data.tags.split(",").map((tag) => tag.trim()),
+      published: validateFields.data.published,
+      ...(thumbnailUrl && thumbnailUrl !== "" && { thumbnail: thumbnailUrl }),
+    },
+  };
+
+  const data = await authFetchGraphql(print(UPDATE_POST_MUTATION), variables);
+  if (data.errors) {
+    return {
+      data: fData,
+      message: data.errors[0].message,
+      ok: false,
+    };
+  }
+
+  return {
+    message: "Success! The post updated.",
     ok: true,
   };
 }

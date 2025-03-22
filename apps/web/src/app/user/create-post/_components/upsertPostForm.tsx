@@ -3,19 +3,41 @@ import SubmitButton from "@/components/submitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { saveNewPost } from "@/lib/actions/postActions";
+import { saveNewPost, updatePost } from "@/lib/actions/postActions";
 import { PostFormState } from "@/lib/types/formState";
+import { Post } from "@/lib/types/modelTypes";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
   type: "create" | "update";
+  post?: Post;
 };
 
 const UpsertPostForm = (props: Props) => {
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [state, action] = useActionState(saveNewPost, undefined);
+  // console.log("props post>>>", props.post);
+  const [imageUrl, setImageUrl] = useState<string>(
+    props.type === "create" ? "" : props.post?.thumbnail || ""
+  );
+  const [state, action] = useActionState(
+    props.type === "create" ? saveNewPost : updatePost,
+    props.type === "create"
+      ? undefined
+      : {
+          data: {
+            postId: props.post?.id,
+            title: props.post?.title,
+            content: props.post?.content,
+            published: props.post?.published ? "on" : "off",
+            tags: props.post?.tags.map((tag) => tag.name).join(","),
+            prevThumbnailUrl: props.post?.thumbnail ?? undefined,
+          },
+        }
+  );
+
+  console.log("state>>>", state);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -32,6 +54,7 @@ const UpsertPostForm = (props: Props) => {
           color: "green",
         },
       });
+      redirect("/user/posts");
     }
   }, [state]);
 
@@ -43,6 +66,8 @@ const UpsertPostForm = (props: Props) => {
       {!!state?.ok === false && !!state?.message && (
         <p className="text-red-500 text-sm">{state.message}</p>
       )}
+
+      <input hidden name="postId" defaultValue={state?.data?.postId} />
       <div className="flex flex-col gap-2 ">
         <Label htmlFor="title">Title</Label>
         <div>
@@ -100,7 +125,13 @@ const UpsertPostForm = (props: Props) => {
         </div>
 
         {!!imageUrl && (
-          <Image src={imageUrl} alt="post thumbnail" width={200} height={150} />
+          <Image
+            src={imageUrl}
+            alt="post thumbnail"
+            width={200}
+            height={150}
+            unoptimized
+          />
         )}
       </div>
 
@@ -125,8 +156,7 @@ const UpsertPostForm = (props: Props) => {
 
       <div className="flex gap-2 items-center">
         <input
-          defaultChecked={false}
-          defaultValue={state?.data?.published}
+          defaultChecked={state?.data?.published === "on"}
           id="published"
           type="checkbox"
           name="published"

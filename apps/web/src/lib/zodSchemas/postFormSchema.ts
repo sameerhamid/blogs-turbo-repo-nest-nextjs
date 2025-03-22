@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export const PostFormSchema = z.object({
+  postId: z
+    .string()
+    .transform((value) => parseInt(value))
+    .optional(),
   title: z
     .string()
     .min(5, "Title should be at least 5 characters long")
