@@ -134,4 +134,26 @@ export class PostService {
       },
     });
   }
+
+  async delete(userId: number, postId: number) {
+    const authorIdMatched = await this.prisma.post.findUnique({
+      where: {
+        id: postId,
+        authorId: userId,
+      },
+    });
+
+    if (!authorIdMatched) {
+      throw new UnauthorizedException(
+        'You are not authorized to delete this post',
+      );
+    }
+    const result = await this.prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+
+    return !!result;
+  }
 }
