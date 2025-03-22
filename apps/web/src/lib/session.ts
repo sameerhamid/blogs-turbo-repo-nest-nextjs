@@ -27,7 +27,7 @@ export const createSession = async (payload: Session) => {
     .setExpirationTime("7d")
     .sign(encodedKey);
 
-  const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const expiredAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
   (await cookies()).set("session", session, {
     expires: expiredAt,
     httpOnly: true,
